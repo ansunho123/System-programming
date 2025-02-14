@@ -127,8 +127,8 @@ int i = 15213 [3b6d]
 * len = 4로 반환 (sizeof(int))
 * size_t 사용 이유
 > 항상 0 이상
-> 시스템 마다 크기가 달라서 좋음
-> int i로 하면 매번 casting unsigned vs signed 비교 성능 저하
+>>시스템 마다 크기가 달라서 좋음
+>>>int i로 하면 매번 casting unsigned vs signed 비교 성능 저하
 * pointer -> unsigned char* : 1bytes
 * start + 1 : start + 1byte
   
