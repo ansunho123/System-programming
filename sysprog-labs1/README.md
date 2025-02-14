@@ -22,6 +22,8 @@
 ## 실습 결과
 실행 결과는 [`sysprog-practice_1.out`](https://github.com/your-repo/sysprog-practice_1.out)에 저장됩니다.
 
+
+-------------------------
 ### Example 1 코드 및 결과
 ```c
 /* practice 1  - unsigned vs. signed 출력 비교 */
@@ -55,3 +57,4 @@ bit-level i = [00001011], unsigned i = 11, signed i = 11
 bit-level i = [00001100], unsigned i = 12, signed i = 12
 ...
 ```
+------------------------
