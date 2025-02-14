@@ -5,6 +5,16 @@
 ## 📂 실습 및 과제 목록
 각 실습 및 과제는 독립적인 폴더로 구성되어 있으며, 아래 링크를 통해 바로 이동할 수 있습니다.
 
+🔗 **과제 목록**
+- [📌 sysprog-hw1](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw1)  - **어셈블리어 코드 해석 및 C 코드 변환**
+  
+  - Assembly 코드를 분석하여 C 코드로 변환하는 과정 실습
+    
+  - 저수준 프로그래밍 개념 학습
+    
+- [📌 sysprog-hw2](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw2) - 동기화 및 공유 메모리 활용 과제
+
+  
 🔗 **실습 목록**
 - [📝 sysprog-labs1](https://github.com/ansunho123/System-programming/tree/main/sysprog-labs1) - **데이터 표현 방식과 기본 연산 실습**
 
@@ -24,14 +34,6 @@
     
 - [📝 sysprog-labs3](https://github.com/ansunho123/System-programming/tree/main/sysprog-labs3) - **진행 예정**
 
-🔗 **과제 목록**
-- [📌 sysprog-hw1](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw1)  - **어셈블리어 코드 해석 및 C 코드 변환**
-  
-  - Assembly 코드를 분석하여 C 코드로 변환하는 과정 실습
-    
-  - 저수준 프로그래밍 개념 학습
-    
-- [📌 sysprog-hw2](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw2) - 동기화 및 공유 메모리 활용 과제
 
 ## 🛠️ 실습 목표
 각 실습과 과제를 수행하면서 다음 개념을 학습할 수 있습니다:\
