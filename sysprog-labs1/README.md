@@ -136,7 +136,7 @@ int i = 15213 [3b6d]
 ### Example 4 코드 및 결과
 
 ```c
-* pratice 4  floating point data representation 확인 */
+/* pratice 4  floating point data representation 확인 */
 
 void analyze_float(pointer start) {
     unsigned int exp;
