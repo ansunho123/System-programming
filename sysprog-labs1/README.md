@@ -15,8 +15,8 @@
 | 파일명       | 설명 |
 |-------------|--------------------------------------------------|
 | [main.c](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/main.c)    | 각 example 함수를 호출하는 main 함수 |
-| [header.h](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/header.h)  | 4개의 example 함수 및 관련 함수 선언 |
-| [func.c](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/func.c) | 4개의 example 함수 및 관련 함수 정의 |
+| [header.h](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/header.h)  | 4개의 example 함수 및 관련 함수(print_binary) 선언 |
+| [func.c](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/func.c) | 4개의 example 함수 및 관련 함수(print_binary) 정의 |
 
 
 ## 실습 결과
@@ -90,3 +90,82 @@ unsigned char uc = 140 [10001100], unsigned char ud = 220 [11011100]
 unsigned char ue = uc + ud = 104 [01101000], real result = 360 [0000000101101000]
 ```
 --------------
+
+### Example 3 코드 및 결과
+
+```c
+/* practice 3  intel 기준 Little endian 1byte씩 확인 */
+
+void show_bytes(pointer start, size_t len) {
+   size_t i;
+   for (i = 0; i < len; i++){
+    printf("%p \t 0x%.2x\n", start+i, start[i]);
+   }
+}
+
+void example_3() { /* data representation */
+   printf ("[Example 3] Data representation\n");
+   int i = 15213;
+   printf("int i = %d [%x]\n", i, i);
+   show_bytes((pointer) &i, sizeof(int));
+}
+```
+#### Example 3 실행 결과
+```
+[Example 3] Data representation
+int i = 15213 [3b6d]
+0x16d2e746c 	 0x6d
+0x16d2e746d 	 0x3b
+0x16d2e746e 	 0x00
+0x16d2e746f 	 0x00
+```
+
+
+### Example 3 구현 이슈
+
+* len = 4로 반환 (sizeof(int))
+* size_t 사용 이유
+> 항상 0 이상
+> 시스템 마다 크기가 달라서 좋음
+> int i로 하면 매번 casting unsigned vs signed 비교 성능 저하
+* pointer -> unsigned char* : 1bytes
+* start + 1 : start + 1byte
+  
+---------------
+### Example 4 코드 및 결과
+
+```c
+* pratice 4  floating point data representation 확인 */
+
+void analyze_float(pointer start) {
+    unsigned int exp;
+    unsigned int frac;
+    unsigned int sign;
+    sign = start[3] >> 7; 
+    exp = ((start[3] & 0x7f) << 1) + (start[2] >> 7);
+    frac = ((unsigned int)(start[2] & 0x7f) << 16) + ((unsigned int) start[1] << 8) + start[0];
+    printf("sign = %u, exp = %u, frac = ", sign, exp);
+    print_binary_frac(frac);
+    printf("\n");
+}
+```
+
+#### Example 4 실행 결과
+```
+[Example 4] Floating point
+float f = 14.000000
+0x16d2e746c 	 0x00
+0x16d2e746d 	 0x00
+0x16d2e746e 	 0x60
+0x16d2e746f 	 0x41
+sign = 0, exp = 130, frac = [11000000000000000000000]
+```
+
+### Example 4 구현 이슈
+* pointer를 array처럼 사용. start[0] : 최하위 1byte 의미
+* exp 8bit >> start[3] 하위 7비트 + start[2] 상위 1
+* frac  23bit >> start[2] 하위 7비트 + start[1] + start[0] 
+
+
+
+
