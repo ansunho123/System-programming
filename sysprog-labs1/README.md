@@ -58,3 +58,35 @@ bit-level i = [00001100], unsigned i = 12, signed i = 12
 ...
 ```
 ------------------------
+### Example 2 코드 및 결과
+```c
+/* practice 2 unsigned addition에서 overflow 영향 확인 */
+
+void example_2() { 
+   /* unsigned addition */
+   printf ("[Example 2] Unsigned addition\n");
+   unsigned char uc = 140;
+   unsigned char ud = 220;
+   unsigned char ue = uc + ud; /* overflow result */
+   unsigned short ushe = (unsigned short) uc + ud; /* true result */
+
+   printf ("unsigned char uc = %u ", uc);
+   print_binary_char(uc);
+   printf (", unsigned char ud = %u ", ud);
+   print_binary_char(ud);
+   printf ("\n");
+   printf ("unsigned char ue = uc + ud = %u ", ue);
+   print_binary_char(ue);
+   printf (", real result = %u ", ushe);
+   print_binary_short(ushe);
+   printf ("\n");
+}
+```
+
+#### Example 2 실행 결과
+```
+[Example 2] Unsigned addition
+unsigned char uc = 140 [10001100], unsigned char ud = 220 [11011100]
+unsigned char ue = uc + ud = 104 [01101000], real result = 360 [0000000101101000]
+```
+--------------
