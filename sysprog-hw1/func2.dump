@@ -1,0 +1,26 @@
+000000000000124a <func2>:
+    124a:       f3 0f 1e fa             endbr64
+    124e:       48 85 f6                test   %rsi,%rsi
+    1251:       7e 41                   jle    1294 <func2+0x4a>
+    1253:       49 89 fa                mov    %rdi,%r10
+    1256:       41 b9 00 00 00 00       mov    $0x0,%r9d
+    125c:       41 b8 00 00 00 00       mov    $0x0,%r8d
+    1262:       b9 00 00 00 00          mov    $0x0,%ecx
+    1267:       48 89 d7                mov    %rdx,%rdi
+    126a:       eb 0f                   jmp    127b <func2+0x31>
+    126c:       4c 01 c9                add    %r9,%rcx
+    126f:       41 83 c0 01             add    $0x1,%r8d
+    1273:       4d 01 d1                add    %r10,%r9
+    1276:       41 39 f0                cmp    %esi,%r8d
+    1279:       74 1e                   je     1299 <func2+0x4f>
+    127b:       ba 00 00 00 00          mov    $0x0,%edx
+    1280:       b8 00 00 00 00          mov    $0x0,%eax
+    1285:       48 01 d1                add    %rdx,%rcx
+    1288:       83 c0 01                add    $0x1,%eax
+    128b:       48 01 fa                add    %rdi,%rdx
+    128e:       39 f0                   cmp    %esi,%eax
+    1290:       75 f3                   jne    1285 <func2+0x3b>
+    1292:       eb d8                   jmp    126c <func2+0x22>
+    1294:       b9 00 00 00 00          mov    $0x0,%ecx
+    1299:       48 89 c8                mov    %rcx,%rax
+    129c:       c3                      retq

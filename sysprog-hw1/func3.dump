@@ -1,0 +1,10 @@
+000000000000129d <func3>:
+    129d:       f3 0f 1e fa             endbr64
+    12a1:       49 0f af f8             imul   %r8,%rdi
+    12a5:       49 0f af f1             imul   %r9,%rsi
+    12a9:       48 29 f7                sub    %rsi,%rdi
+    12ac:       48 0f af 54 24 08       imul   0x8(%rsp),%rdx
+    12b2:       48 8d 04 3a             lea    (%rdx,%rdi,1),%rax
+    12b6:       48 0f af 4c 24 10       imul   0x10(%rsp),%rcx
+    12bc:       48 29 c8                sub    %rcx,%rax
+    12bf:       c3                      retq

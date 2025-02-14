@@ -1,0 +1,16 @@
+00000000000012c0 <func4>:
+    12c0:       f3 0f 1e fa             endbr64
+    12c4:       b8 02 00 00 00          mov    $0x2,%eax
+    12c9:       48 83 ff 01             cmp    $0x1,%rdi
+    12cd:       7e 14                   jle    12e3 <func4+0x23>
+    12cf:       53                      push   %rbx
+    12d0:       48 89 fb                mov    %rdi,%rbx
+    12d3:       48 8d 7f ff             lea    -0x1(%rdi),%rdi
+    12d7:       e8 e4 ff ff ff          callq  12c0 <func4>
+    12dc:       48 8d 44 58 ff          lea    -0x1(%rax,%rbx,2),%rax
+    12e1:       5b                      pop    %rbx
+    12e2:       c3                      retq
+    12e3:       c3                      retq
+    12e4:       66 2e 0f 1f 84 00 00    nopw   %cs:0x0(%rax,%rax,1)
+    12eb:       00 00 00
+    12ee:       66 90                   xchg   %ax,%ax

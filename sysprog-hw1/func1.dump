@@ -1,0 +1,9 @@
+0000000000001236 <func1>:
+    1236:       f3 0f 1e fa             endbr64
+    123a:       48 8d 04 37             lea    (%rdi,%rsi,1),%rax
+    123e:       48 29 d0                sub    %rdx,%rax
+    1241:       78 01                   js     1244 <func1+0xe>
+    1243:       c3                      retq
+    1244:       48 0f af c0             imul   %rax,%rax
+    1248:       eb f9                   jmp    1243 <func1+0xd>
+
