@@ -24,6 +24,7 @@
 
 ## 🛠️ 실습 목표
 각 실습과 과제를 수행하면서 다음 개념을 학습할 수 있습니다:\
+
 ✅ **데이터 표현 방식과 메모리 구조 이해** (Little Endian, Overflow, Floating Point 연산)
 
 ✅ **GCC 컴파일 및 GDB 디버깅 기법 습득** (Object 파일 분석 및 Assembly 변환)
