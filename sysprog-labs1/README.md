@@ -14,6 +14,6 @@
 
 | 파일명       | 설명 |
 |-------------|--------------------------------------------------|
-| `main.c`    | 각 example 함수를 호출하는 main 함수 |
-| `header.h`  | 4개의 example 함수 및 관련 함수 선언 |
-| `func.c` | 4개의 example 함수 및 관련 함수 정의 |
+| [main.c](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/main.c)    | 각 example 함수를 호출하는 main 함수 |
+| [header.h](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/header.h)  | 4개의 example 함수 및 관련 함수 선언 |
+| [func.c](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs1/func.c) | 4개의 example 함수 및 관련 함수 정의 |
