@@ -207,7 +207,7 @@ $2 = 20
 
 ***********
 
-##Display Assembly using GDB
+## Display Assembly using GDB
 
 ### GDB에서 특정 함수의 assembly code를 얻는 것이 가능함.
 
@@ -216,7 +216,7 @@ $2 = 20
 
 ## Disassembling using Disassembler
 
-###objdump라는 프로그램을 통해 assembly code를 얻는 방법.
+### objdump라는 프로그램을 통해 assembly code를 얻는 방법.
 
 - ` $ objdump–d <file name>`
 - <filename> 은 실행 가능한 파일이거나 혹은 object 파일(.o) 형태여야 한다.
