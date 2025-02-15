@@ -46,30 +46,87 @@ long func1(long x, long y, long z)
 
 ---
 
-## 어셈블리 코드 분석 및 해석
+## 2) func2 분석
 
-- `123a: lea (%rdi, %rsi,1), %rax`
-  - `rdi`는 첫 번째 인자(`x`), `rsi`는 두 번째 인자(`y`)
-  - `lea (%rdi, %rsi,1), %rax`는 주소 변환 연산으로 `rdi + rsi * 1`을 `rax`에 저장
-  - 따라서 `long result = x + y;`로 변환
+### 어셈블리 코드
+```assembly
+000000000000124a <func2>:
+    124a:       f3 0f 1e fa             endbr64
+    124e:       48 85 f6                test   %rsi,%rsi
+    1251:       7e 41                   jle    1294 <func2+0x4a>
+    1253:       49 89 fa                mov    %rdi,%r10
+    1256:       41 b9 00 00 00 00       mov    $0x0,%r9d
+    125c:       41 b8 00 00 00 00       mov    $0x0,%r8d
+    1262:       b9 00 00 00 00          mov    $0x0,%ecx
+    1267:       48 89 d7                mov    %rdx,%rdi
+    126a:       eb 0f                   jmp    127b <func2+0x31>
+    126c:       4c 01 c9                add    %r9,%rcx
+    126f:       41 83 c0 01             add    $0x1,%r8d
+    1273:       4d 01 d1                add    %r10,%r9
+    1276:       41 39 f0                cmp    %esi,%r8d
+    1279:       74 1e                   je     1299 <func2+0x4f>
+    127b:       ba 00 00 00 00          mov    $0x0,%edx
+    1280:       b8 00 00 00 00          mov    $0x0,%eax
+    1285:       48 01 d1                add    %rdx,%rcx
+    1288:       83 c0 01                add    $0x1,%eax
+    128b:       48 01 fa                add    %rdi,%rdx
+    128e:       39 f0                   cmp    %esi,%eax
+    1290:       75 f3                   jne    1285 <func2+0x3b>
+    1292:       eb d8                   jmp    126c <func2+0x22>
+    1294:       b9 00 00 00 00          mov    $0x0,%ecx
+    1299:       48 89 c8                mov    %rcx,%rax
+    129c:       c3                      retq
+```
 
-- `123e: sub %rdx, %rax`
-  - `rax`에서 `rdx`(세 번째 인자, `z`)를 빼는 연산
-  - 즉, `result = result - z;`에 해당
+### 변환된 C 코드
+```c
+long func2(long x, long y, long z)
+{
+    long rcx = 0;
+    long r10 = x;
+    long r9 = 0;
+    long r8 = 0;
+    x = z;
+    long result = 0;
+    z = 0;
+    if (y <= 0)
+    {
+        return rcx;
+    }
 
-- `1241: js 1244`
-  - 최근 연산 결과가 negative이면(음수이면) `1244`로 점프
-  - 따라서 `if (result < 0)` 조건을 의미
+    while (1)
+    {
+        rcx += z;
+        result += 1;
+        z += x;
+        if (result != y)
+        {
+            continue;
+        }
 
-- `1244: imul %rax, %rax`
-  - `rax = rax * rax`, 즉 `result = result * result;`
+        rcx += r9;
+        r8 += 1;
+        r9 += r10;
+        if (r8 == y)
+        {
+            return rcx;
+        }
+        z = 0;
+        result = 0;
+    }
+}
+```
 
-- `1248: jmp 1243`
-  - `1243` 주소는 `retq`를 실행하는 부분으로 바로 리턴됨
-  - 즉, `return result * result;`
+### 어셈블리 코드 분석 및 해석
 
-- `1243: retq`
-  - `if (result < 0)`이 아니라면 바로 `return result;`
+- `%rdi`, `%rsi`, `%rdx`는 각각 첫 번째(`x`), 두 번째(`y`), 세 번째(`z`) 인자
+- `test %rsi, %rsi` 후 `jle` 실행 → `if (y <= 0)` 조건 확인 후 리턴
+- 초기화 과정에서 `r10 = x`, `r9 = 0`, `r8 = 0`, `x = z`, `result = 0`, `z = 0` 설정
+- 반복문 실행: `rcx`에 `z`를 더하고, `result` 증가, `z`에 `x`를 더함
+- `if (result != y)`가 참이면 계속 진행
+- `rcx`에 `r9`를 더하고, `r8` 증가, `r9`에 `r10` 더하기
+- `if (r8 == y)`이면 `rcx` 반환
+- `z = 0; result = 0;` 후 다시 반복
 
-따라서 최종적으로 변환된 C 코드는 위와 같이 작성될 수 있습니다.
+
 
