@@ -25,6 +25,7 @@
 **********************
 ## 실습 과정
 
+### C 파일 
 
 ### main 함수 
 ```c
@@ -59,6 +60,36 @@ int func(int a) {
 int func(int);
 ```
 *********************
+
+## GCC 컴파일 
+
+### GCC 주요 option
+• -o <filename>: 출력 파일 지정
+• -O/-O0/-O1/-O2: 최적화(optimization) 레벨
+• -S: compile만 수행 (assembly code로 출력, assemble과 link 과정 수행 안함)
+• -c: compile 및 assemble만 수행 (link 과정 수행 안함)
+• -g: debugging을 위한 정보를 포함한 컴파일
+• 옵션이 포함된 사용법 ex) gcc -O1 -g -o exe_file main.c func.c
+
+
+
+### Compile with optimization Level 1
+```
+$ gcc –O1 –o ex1 main.c func.c
+$ ./ex1
+func(10) = 45
+```
+
+### • Compile only (func.c를 assembly어로만)
+
+```
+$ gcc –O1 –S func.c
+$ vim func.s
+```
+[func.s](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs2/func.s)
+
+*****************
+
 
 
 
