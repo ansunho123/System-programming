@@ -205,5 +205,72 @@ $1 = 10
 $2 = 20
 ```
 
+***********
 
+##Display Assembly using GDB
+
+### GDB에서 특정 함수의 assembly code를 얻는 것이 가능함.
+
+- `“disas” 명령어 + 함수 이름`
+- `“set disassembly-flavor” 명령어 + “intel” (for Intel) 혹은“att” (for AT&T).` : assembly code의 타입도 설정 가능
+
+## Disassembling using Disassembler
+
+###objdump라는 프로그램을 통해 assembly code를 얻는 방법.
+
+- ` $ objdump–d <file name>`
+- <filename> 은 실행 가능한 파일이거나 혹은 object 파일(.o) 형태여야 한다.
+
+### Example(ex1 -> ex1_assembly)
+
+```
+$ gcc–o ex1 –O1 main.c func.c
+$ ./ex1
+func(10) = 45
+$ objdump–d ex1
+```
+
+
+```
+ex1:	file format mach-o arm64
+
+Disassembly of section __TEXT,__text:
+
+0000000100003f24 <_main>:
+100003f24: d100c3ff    	sub	sp, sp, #0x30
+100003f28: a9014ff4    	stp	x20, x19, [sp, #0x10]
+100003f2c: a9027bfd    	stp	x29, x30, [sp, #0x20]
+100003f30: 910083fd    	add	x29, sp, #0x20
+100003f34: 52800153    	mov	w19, #0xa               ; =10
+100003f38: 52800140    	mov	w0, #0xa                ; =10
+100003f3c: 9400000a    	bl	0x100003f64 <_func>
+100003f40: a90003f3    	stp	x19, x0, [sp]
+100003f44: 90000000    	adrp	x0, 0x100003000 <_printf+0x100003000>
+100003f48: 913e4000    	add	x0, x0, #0xf90
+100003f4c: 9400000e    	bl	0x100003f84 <_printf+0x100003f84>
+100003f50: 52800000    	mov	w0, #0x0                ; =0
+100003f54: a9427bfd    	ldp	x29, x30, [sp, #0x20]
+100003f58: a9414ff4    	ldp	x20, x19, [sp, #0x10]
+100003f5c: 9100c3ff    	add	sp, sp, #0x30
+100003f60: d65f03c0    	ret
+
+0000000100003f64 <_func>:
+100003f64: 51000408    	sub	w8, w0, #0x1
+100003f68: 51000809    	sub	w9, w0, #0x2
+100003f6c: 9ba97d09    	umull	x9, w8, w9
+100003f70: d341fd29    	lsr	x9, x9, #1
+100003f74: 0b090108    	add	w8, w8, w9
+100003f78: 7100041f    	cmp	w0, #0x1
+100003f7c: 1a88b3e0    	csel	w0, wzr, w8, lt
+100003f80: d65f03c0    	ret
+
+Disassembly of section __TEXT,__stubs:
+
+0000000100003f84 <__stubs>:
+100003f84: b0000010    	adrp	x16, 0x100004000 <_printf+0x100004000>
+100003f88: f9400210    	ldr	x16, [x16]
+100003f8c: d61f0200    	br	x16
+```
+
+**************************
 
