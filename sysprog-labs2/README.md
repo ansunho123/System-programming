@@ -64,12 +64,12 @@ int func(int);
 ## GCC 컴파일 
 
 ### GCC 주요 option
-• -o <filename>: 출력 파일 지정
-• -O/-O0/-O1/-O2: 최적화(optimization) 레벨
-• -S: compile만 수행 (assembly code로 출력, assemble과 link 과정 수행 안함)
-• -c: compile 및 assemble만 수행 (link 과정 수행 안함)
-• -g: debugging을 위한 정보를 포함한 컴파일
-• 옵션이 포함된 사용법 ex) gcc -O1 -g -o exe_file main.c func.c
+* -o <filename>: 출력 파일 지정
+* O/-O0/-O1/-O2: 최적화(optimization) 레벨
+* -S: compile만 수행 (assembly code로 출력, assemble과 link 과정 수행 안함)
+* -c: compile 및 assemble만 수행 (link 과정 수행 안함)
+* -g: debugging을 위한 정보를 포함한 컴파일
+* 옵션이 포함된 사용법 ex) gcc -O1 -g -o exe_file main.c func.c
 
 
 
