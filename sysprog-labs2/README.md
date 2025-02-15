@@ -86,7 +86,7 @@ func(10) = 45
 $ gcc –O1 –S func.c
 $ vim func.s
 ```
-### [func.s](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs2/func.s)
+|[func.s](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs2/func.s)|
 
 *****************
 
