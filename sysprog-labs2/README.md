@@ -214,6 +214,8 @@ $2 = 20
 - `“disas” 명령어 + 함수 이름`
 - `“set disassembly-flavor” 명령어 + “intel” (for Intel) 혹은“att” (for AT&T).` : assembly code의 타입도 설정 가능
 
+**************
+
 ## Disassembling using Disassembler
 
 ### objdump라는 프로그램을 통해 assembly code를 얻는 방법.
