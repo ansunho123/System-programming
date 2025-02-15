@@ -128,5 +128,114 @@ long func2(long x, long y, long z)
 - `if (r8 == y)`이면 `rcx` 반환
 - `z = 0; result = 0;` 후 다시 반복
 
+---
 
+## 2) func3 분석
 
+### 어셈블리 코드
+```assembly
+000000000000129d <func3>:
+    129d:       f3 0f 1e fa             endbr64
+    12a1:       49 0f af f8             imul   %r8,%rdi
+    12a5:       49 0f af f1             imul   %r9,%rsi
+    12a9:       48 29 f7                sub    %rsi,%rdi
+    12ac:       48 0f af 54 24 08       imul   0x8(%rsp),%rdx
+    12b2:       48 8d 04 3a             lea    (%rdx,%rdi,1),%rax
+    12b6:       48 0f af 4c 24 10       imul   0x10(%rsp),%rcx
+    12bc:       48 29 c8                sub    %rcx,%rax
+    12bf:       c3                      retq
+
+```
+
+### 변환된 C 코드
+```c
+
+long func3(long rdi, long rsi, long rdx, long rcx, long r8, long r9, long x, long y)
+{
+    rdi *= r8;
+    rsi *= r9;
+    rdi -= rsi;
+    rdx *= x;
+    long result = (rdx + rdi);
+    rcx *= y;
+    result -= rcx;
+    return result;
+}
+```
+
+### 어셈블리 코드 분석 및 해석
+
+- imul %r8, %rdi → rdi *= r8;
+- imul %r9, %rsi → rsi *= r9;
+- sub %rsi, %rdi → rdi -= rsi;
+- imul 0x8(%rsp), %rdx → rdx *= x;
+- lea (%rdx, %rdi,1), %rax → result = rdx + rdi;
+- imul 0x10(%rsp), %rcx → rcx *= y;
+- sub %rcx, %rax → result -= rcx;
+- retq → return result;
+
+---------
+## 2) func4 분석
+
+### 어셈블리 코드
+```assembly
+00000000000012c0 <func4>:
+    12c0:       f3 0f 1e fa             endbr64
+    12c4:       b8 02 00 00 00          mov    $0x2,%eax
+    12c9:       48 83 ff 01             cmp    $0x1,%rdi
+    12cd:       7e 14                   jle    12e3 <func4+0x23>
+    12cf:       53                      push   %rbx
+    12d0:       48 89 fb                mov    %rdi,%rbx
+    12d3:       48 8d 7f ff             lea    -0x1(%rdi),%rdi
+    12d7:       e8 e4 ff ff ff          callq  12c0 <func4>
+    12dc:       48 8d 44 58 ff          lea    -0x1(%rax,%rbx,2),%rax
+    12e1:       5b                      pop    %rbx
+    12e2:       c3                      retq
+    12e3:       c3                      retq
+    12e4:       66 2e 0f 1f 84 00 00    nopw   %cs:0x0(%rax,%rax,1)
+    12eb:       00 00 00
+    12ee:       66 90                   xchg   %ax,%ax
+
+```
+
+### 변환된 C 코드
+```c
+
+llong func4(int rdi)
+{
+    long result = 2;
+
+    if (rdi <= 1)
+    {
+        return result;
+    }
+    // push %rbx는 x를 다시 쓰기 때문에 다시 넣어놓는 임시 변수지만 전에 써있을수도 있으니 넣는거!
+    long rbx = rdi;
+    rdi--;
+
+    long v1 = func4(rdi);
+    result = v1 + (rbx * 2 - 1);
+    return result;
+    // pop rbx 예전의 rdi값 rbx에 받아오는거!
+}
+```
+
+### 어셈블리 코드 분석 및 해석
+
+#### 변수 할당
+
+- %rdi → rdi (첫 번째 인자)
+- %rax → result, v1
+- %rbx → rbx
+
+#### 어셈블리 변환
+
+- mov $0x2, %eax → long result = 2;
+- cmp $0x1, %rdi → if (rdi <= 1)
+- jne 12e3 → 조건 만족 시 return result;
+- push %rbx → rbx를 스택에 저장 (Callee 레지스터 보호)
+- mov %rdi, %rbx → long rbx = rdi;
+- lea -0x1(%rdi), %rdi → rdi--;
+- callq 12c0 <func4> → 재귀 호출 → long v1 = func4(rdi);
+- lea -0x1(%rax,%rbx,2), %rax → result = v1 + (rbx * 2 - 1);
+- retq → return result;
