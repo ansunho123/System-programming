@@ -26,7 +26,7 @@ example3/
 
 ## 실습 과정
 
-### Example 1
+### Example 1 : Linking 전 symbol 테이블, relocation 내용 확인
 
 #### main.c
 ```c
@@ -93,7 +93,7 @@ vim objdump_ex4_1
 
 ---
 
-## Example 2
+## Example 2 : Static Linking
 
 #### main2.c
 ```c
@@ -166,4 +166,145 @@ gcc -static -o ex4_2 main2.o ./libvector.a
 ```sh
 gcc -static -o ex4_2 main2.o -L. -lvector
 ```
+
+***************
+
+
+## Example 3: Library Interpositioning
+
+### 1) Compile-Time Interpositioning
+
+#### malloc.h (user local)
+```c
+#define malloc mymalloc
+#define free myfree
+void *mymalloc(size_t size);
+void myfree(void *ptr);
+```
+
+#### mymalloc.c
+```c
+#ifdef COMPILETIME
+#include <stdio.h>
+#include <malloc.h>
+void *mymalloc(size_t size) {
+    void *ptr = malloc(size);
+    printf("malloc(%d) = %p\n", (int)size, ptr);
+    return ptr;
+}
+void myfree(void *ptr) {
+    free(ptr);
+    printf("free(%p)\n", ptr);
+}
+#endif
+```
+
+#### Compile-Time Interpositioning 실행
+```sh
+gcc -DCOMPILETIME -c mymalloc.c
+gcc -I. -o ex4_3C main3.c mymalloc.o
+./ex4_3C
+```
+출력 예시:
+```
+malloc(32) = 0x55d9cf1b4260
+0x55d9cf1b4260
+free(0x55d9cf1b4260)
+```
+
+---
+
+### 2) Link-Time Interpositioning
+
+#### mymalloc.c
+```c
+#ifdef LINKTIME
+#include <stdio.h>
+void *__real_malloc(size_t size);
+void __real_free(void *ptr);
+void *__wrap_malloc(size_t size) {
+    void *ptr = __real_malloc(size);
+    printf("malloc(%d) = %p\n", (int)size, ptr);
+    return ptr;
+}
+void __wrap_free(void *ptr) {
+    __real_free(ptr);
+    printf("free(%p)\n", ptr);
+}
+#endif 
+```
+
+#### Link-Time Interpositioning 실행
+```sh
+gcc -DLINKTIME -c mymalloc.c
+gcc -c main3.c
+gcc -Wl,--wrap,malloc -Wl,--wrap,free -o ex4_3L main3.o mymalloc.o
+./ex4_3L
+```
+출력 예시:
+```
+malloc(32) = 0x55d3eeec1260
+0x55d3eeec1260
+free(0x55d3eeec1260)
+```
+
+---
+
+### 3) Runtime Interpositioning
+
+#### mymalloc.c
+```c
+#ifdef RUNTIME
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
+
+void *malloc(size_t size)
+{
+    void *(*mallocp)(size_t size);
+    char *error;
+    mallocp = dlsym(RTLD_NEXT, "malloc");
+    if ((error = dlerror()) != NULL)
+    {
+        fputs(error, stderr);
+        exit(1);
+    }
+    char *ptr = mallocp(size);
+    static char malloc_lock = 0;
+    if (!malloc_lock)
+    {
+        malloc_lock = 1;
+        printf("malloc(%d) = %p\n", (int)size, ptr);
+        malloc_lock = 0;
+    }
+    return ptr;
+}
+
+void free(void *ptr)
+{
+    void (*freep)(void *) = NULL;
+    char *error;
+    if (!ptr)
+        return;
+    freep = dlsym(RTLD_NEXT, "free");
+    if ((error = dlerror()) != NULL)
+    {
+        fputs(error, stderr);
+        exit(1);
+    }
+    freep(ptr);
+    printf("free(%p)\n", ptr);
+}
+#endif
+```
+
+#### Runtime Interpositioning 실행
+```sh
+gcc -DRUNTIME -shared -fpic -o mymalloc.so mymalloc.c -ldl
+gcc -o ex4_3R main3.c
+LD_PRELOAD="./mymalloc.so" ./ex4_3R
+```
+
+
 
