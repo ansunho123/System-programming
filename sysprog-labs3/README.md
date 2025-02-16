@@ -76,6 +76,9 @@ vim objdump_main
 #### 사진 첨부 및 설명
 ![Linking 전 symbol 테이블 및 relocation 내용](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs3/images/linking%20%E1%84%83%E1%85%AC%E1%84%80%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%AB.jpeg)
 
+
+
+
 ### Linking 및 실행 파일 확인
 ```sh
 gcc -o ex4_1 main.o sum.o
@@ -84,7 +87,9 @@ vim objdump_ex4_1
 ```
 
 #### 사진 첨부 및 설명
-(사진 첨부 후, 해당 내용을 설명)
+
+![Linking 후](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs3/images/linking%20%E1%84%83%E1%85%AC%E1%86%AB%20%E1%84%92%E1%85%AE.jpeg)
+
 
 ---
 
@@ -137,8 +142,8 @@ void multvec(int *x, int *y, int *z, int n)
 }
 ```
 
-### 사진 첨부
-(사진을 추가하고 설명 작성)
+### 그림 설명
+![static linking](https://github.com/ansunho123/System-programming/blob/main/sysprog-labs3/images/Static%20linking.jpeg)
 
 ### 각각의 object file 만들기
 ```sh
