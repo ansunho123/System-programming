@@ -12,7 +12,7 @@
     
   - 저수준 프로그래밍 개념 학습
     
-- [📌 sysprog-hw2](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw2) - 동기화 및 공유 메모리 활용 과제
+- [📌 sysprog-hw2](https://github.com/ansunho123/System-programming/tree/main/sysprog-hw2) - **Interposition 기법 과제**
 
   
 🔗 **실습 목록**
@@ -51,7 +51,7 @@
 
 ✅ **어셈블리어 코드 해석 능력 향상 및 C 코드 변환**
 
-✅ **멀티프로세싱과 동기화 기법 이해 및 적용** (IPC, 공유 메모리 활용)
+✅ **Linking 과정 이해 및 interposition 기법 실습** 
 
 
 
