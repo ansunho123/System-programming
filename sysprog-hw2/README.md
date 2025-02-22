@@ -219,4 +219,5 @@ myprint.c 참고 */
 ---
 
 ## Link-time 결과 
+![LInkint time Interpositioning](
 
