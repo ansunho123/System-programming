@@ -196,6 +196,19 @@ int myprintf(const char* format,...){
     return 0;    
 }
 #endif
+
+#ifdef LINKTIME
+
+#include <stdio.h>
+#include <stdarg.h>
+
+int __real_printf(const char* format,...);
+
+int __wrap_printf(const char* format,...){
+
+/* 위와 코드는 동일 하기 때문에 생략.
+myprint.c 참고 */
+ 
 ```
 
 ---
@@ -203,4 +216,7 @@ int myprintf(const char* format,...){
 
 ![Compile Time Interpositioning](https://github.com/ansunho123/System-programming/raw/main/sysprog-hw2/images/compiltetime%20interpositioning.png)
 
+---
+
+## Link-time 결과 
 
