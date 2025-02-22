@@ -32,7 +32,14 @@
     
   - Object 파일을 Assembly로 변환하여 구조 분석
     
-- [📝 sysprog-labs3](https://github.com/ansunho123/System-programming/tree/main/sysprog-labs3) - **진행 예정**
+- [📝 sysprog-labs3](https://github.com/ansunho123/System-programming/tree/main/sysprog-labs3) - **LINKING**
+  - - GCC를 활용한 컴파일 및 링킹 과정 이해
+  
+  - **Symbol Table**을 확인하고 심볼 분석하기 (`nm` 명령어 활용)
+    
+  - **Static Linking**을 통한 정적 라이브러리 사용법 실습
+    
+  - **Library Interposition** 기법을 이용한 동적 라이브러리 함수 후킹
 
 
 ## 🛠️ 실습 목표
