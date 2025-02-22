@@ -199,5 +199,8 @@ int myprintf(const char* format,...){
 ```
 
 ---
+## Compile Time 결과
+
+![Compile Time Interpositioning](https://github.com/ansunho123/System-programming/raw/main/sysprog-hw2/images/compiltetime%20interpositioning.png)
 
 
